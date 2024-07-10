@@ -66,3 +66,20 @@ public class BorrowService implements com.book.service.BorrowService {
     }
 
 }
+
+    //返回所有书籍的信息，包含借阅与否
+    @Override
+    public Map<Book,Boolean> getAllBook() {
+        Set<Integer> set = new HashSet<>();
+        //存储借出去的书
+        this.getBorrowList().forEach(borrow -> set.add(borrow.getBook_id()));
+        try(SqlSession sqlSession = MybatisUtil.getSession()) {
+            Map<Book,Boolean> map = new LinkedHashMap<>();
+            BookMapper mapper = sqlSession.getMapper(BookMapper.class);
+            //遍历书籍，存储书的信息，用contains判断set中是否有这本书
+            mapper.getBookList().forEach(book ->
+                    map.put(book,set.contains(book.getBid())));
+            return map;
+        }
+    }
+

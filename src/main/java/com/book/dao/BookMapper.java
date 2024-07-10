@@ -25,5 +25,9 @@ public interface BookMapper {
     @Select("select * from book")
     List<Book> getBookList();
 
+    @Insert("insert into borrow(sid,bid,time) values(#{sid},#{bid},NOW())")
+    void InsertBorrow(@Param("sid") int sid,@Param("bid") int bid);//
+
+
 
 }
