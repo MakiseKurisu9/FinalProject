@@ -32,6 +32,9 @@ public interface BookMapper {
     @Insert("insert into borrow(sid,bid,time) values(#{sid},#{bid},NOW())")
     void InsertBorrow(@Param("sid") int sid,@Param("bid") int bid);//
 
+    @Delete("delete from book where bid=#{bid}")
+    void DeleteBook(int bid);
+
 
 
 }
