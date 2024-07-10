@@ -2,9 +2,11 @@ package com.book.service.impl;
 
 import com.book.dao.BookMapper;
 import com.book.dao.StudentMapper;
+import com.book.dao.UserMapper;
 import com.book.entity.Book;
 import com.book.entity.Borrow;
 import com.book.entity.Student;
+import com.book.entity.User;
 import com.book.utils.MybatisUtil;
 import org.apache.ibatis.session.SqlSession;
 
@@ -39,16 +41,16 @@ public class BorrowService implements com.book.service.BorrowService {
         this.getBorrowList().forEach(borrow -> set.add(borrow.getBook_id()));
         try(SqlSession sqlSession = MybatisUtil.getSession()) {
             BookMapper mapper = sqlSession.getMapper(BookMapper.class);
-        return  mapper.getBookList()
-                      .stream()
-                //留下不在BorrowList的书
-                      .filter(book -> !set.contains(book.getBid()))
-                      .collect(Collectors.toList());
+            return  mapper.getBookList()
+                    .stream()
+                    //留下不在BorrowList的书
+                    .filter(book -> !set.contains(book.getBid()))
+                    .collect(Collectors.toList());
         }
     }
 
 
-//返回学生信息
+    //返回学生信息
     @Override
     public List<Student> getStudentList() {
         try(SqlSession sqlSession = MybatisUtil.getSession()) {
@@ -56,7 +58,7 @@ public class BorrowService implements com.book.service.BorrowService {
             return mapper.getStudent();
         }
     }
-//添加借阅信息
+    //添加借阅信息
     @Override
     public void addBorrow(int sid, int bid) {
         try(SqlSession sqlSession = MybatisUtil.getSession()) {
@@ -64,9 +66,6 @@ public class BorrowService implements com.book.service.BorrowService {
             mapper.InsertBorrow(sid, bid);
         }
     }
-
-}
-
     //返回所有书籍的信息，包含借阅与否
     @Override
     public Map<Book,Boolean> getAllBook() {
@@ -83,3 +82,19 @@ public class BorrowService implements com.book.service.BorrowService {
         }
     }
 
+    @Override
+    public void deleteBook(int bid) {
+        try (SqlSession sqlSession = MybatisUtil.getSession()){
+            BookMapper mapper = sqlSession.getMapper(BookMapper.class);
+            mapper.DeleteBook(bid);
+        }
+    }
+
+    @Override
+    public void InsertBook(Book book) {
+        try (SqlSession sqlSession = MybatisUtil.getSession()){
+            BookMapper mapper = sqlSession.getMapper(BookMapper.class);
+            mapper.InsertBook(book.getTitle(), book.getDesc(), book.getPrice());
+        }
+    }
+}
