@@ -1,6 +1,7 @@
 package com.book.servlet.manage;
 
 import com.book.service.BorrowService;
+import com.book.service.impl.BorrowServiceImpl;
 import com.book.utils.ThymeleafUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,11 +14,11 @@ import java.io.IOException;
 
 @WebServlet("/addBorrow")
 public class addBorrow extends HttpServlet {
-    BorrowService service;
+    BorrowServiceImpl service;
 
     @Override
     public void init() throws ServletException {
-        service = new com.book.service.impl.BorrowService();
+        service = new com.book.service.impl.BorrowServiceImpl();
     }
 
     @Override

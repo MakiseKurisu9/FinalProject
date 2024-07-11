@@ -1,10 +1,7 @@
 package com.book.servlet.auth;
 
 
-import com.book.dao.UserMapper;
-import com.book.entity.User;
-import com.book.service.impl.UserService;
-import com.book.utils.MybatisUtil;
+import com.book.service.impl.UserServiceImpl;
 import com.book.utils.ThymeleafUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,7 +9,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.ibatis.session.SqlSession;
 import org.thymeleaf.context.Context;
 
 import java.io.IOException;
@@ -20,10 +16,10 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    UserService service;
+    UserServiceImpl service;
     @Override
     public void init() throws ServletException {
-        service = new UserService();
+        service = new UserServiceImpl();
     }
 
     @Override

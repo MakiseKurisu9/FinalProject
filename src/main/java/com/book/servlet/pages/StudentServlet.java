@@ -19,7 +19,7 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        service = new com.book.service.impl.BorrowService();
+        service = new com.book.service.impl.BorrowServiceImpl();
     }
 
     @Override
